@@ -17,6 +17,22 @@ class ProductSeeder extends Seeder
 
         $products = [
             [
+                'category_id' => $fashion->id,
+                'name' => 'Signature Orange Puffer Jacket',
+                'description' => "It's not just about staying warm. It's about stepping outside and instantly feeling confident, comfortable, and completely yourself.",
+                'price' => 4990.00,
+                'stock' => 12,
+                'image' => '../images/orange_puffer_hero.jpg',
+            ],
+            [
+                'category_id' => $fashion->id,
+                'name' => 'Noir Glossy Black Puffer Jacket',
+                'description' => 'Unmatched style, wrapped in shadow. Lightweight warmth designed to elevate even the simplest outfit.',
+                'price' => 5490.00,
+                'stock' => 8,
+                'image' => '../images/black_puffer_thumb.jpg',
+            ],
+            [
                 'category_id' => $electronics->id,
                 'name' => 'Wireless Noise-Canceling Headphones',
                 'description' => 'High quality sound experience with active noise cancellation and 30-hour battery life.',
@@ -29,7 +45,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Smart Watch Pro',
                 'description' => 'Track your daily fitness activities, heart rate, and sleep quality with clear AMOLED display.',
                 'price' => 1890.00,
-                'stock' => 3, // Low stock for testing low stock alert!
+                'stock' => 3,
                 'image' => null,
             ],
             [
@@ -53,7 +69,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Portable Bluetooth Speaker',
                 'description' => 'Waterproof IPX7 speaker with deep bass and compact design for outdoor adventures.',
                 'price' => 1250.00,
-                'stock' => 2, // Low stock!
+                'stock' => 2,
                 'image' => null,
             ],
         ];
