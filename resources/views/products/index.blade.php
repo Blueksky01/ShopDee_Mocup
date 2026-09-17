@@ -108,9 +108,14 @@
                         </span>
                     @endif
                 </a>
-                <button type="button" class="w-9 h-9 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center text-white transition border border-white/10">
-                    <i class="fa-regular fa-heart text-sm"></i>
-                </button>
+                <a href="{{ route('wishlist.index') }}" class="w-9 h-9 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center text-white transition border border-white/10 relative" title="สิ่งที่ชอบ (Wishlist)">
+                    <i class="fa-solid fa-heart text-sm text-terracotta"></i>
+                    @if(auth()->check() && auth()->user()->wishlists()->count() > 0)
+                        <span class="absolute -top-1 -right-1 bg-white text-[#a24410] font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow">
+                            {{ auth()->user()->wishlists()->count() }}
+                        </span>
+                    @endif
+                </a>
             </div>
         </div>
 
@@ -280,6 +285,17 @@
                 @foreach($products as $product)
                     <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition border border-terracotta/15 flex flex-col overflow-hidden">
                         <div class="h-56 bg-limestone/40 flex items-center justify-center relative overflow-hidden">
+                            @auth
+                                @if(!auth()->user()->isAdmin())
+                                    <form action="{{ route('wishlist.toggle', $product) }}" method="POST" class="absolute top-3 left-3 z-10">
+                                        @csrf
+                                        <button type="submit" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-rust flex items-center justify-center shadow transition backdrop-blur-sm" title="บันทึกในรายการที่ชอบ">
+                                            <i class="fa-{{ auth()->user()->hasWishlisted($product->id) ? 'solid text-terracotta' : 'regular text-rust/60' }} fa-heart text-sm"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            @endauth
+
                             @if($product->image)
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                             @else

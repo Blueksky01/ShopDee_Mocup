@@ -61,6 +61,17 @@
                                 <i class="fa-solid fa-clipboard-list mr-1"></i> จัดการออเดอร์
                             </a>
                         @else
+                            <a href="{{ route('wishlist.index') }}" class="relative hover:text-terracotta px-3 py-2 rounded-md text-sm font-medium transition">
+                                <i class="fa-solid fa-heart mr-1 text-terracotta"></i> สิ่งที่ชอบ
+                                @php
+                                    $wishlistCount = auth()->user()->wishlists()->count();
+                                @endphp
+                                @if($wishlistCount > 0)
+                                    <span class="absolute -top-1 -right-1 bg-terracotta text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">
+                                        {{ $wishlistCount }}
+                                    </span>
+                                @endif
+                            </a>
                             <a href="{{ route('cart.index') }}" class="relative hover:text-terracotta px-3 py-2 rounded-md text-sm font-medium transition">
                                 <i class="fa-solid fa-cart-shopping mr-1"></i> ตะกร้าสินค้า
                                 @php
