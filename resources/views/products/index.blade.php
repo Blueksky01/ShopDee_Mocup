@@ -141,13 +141,7 @@
                     </a>
                 </div>
 
-                <!-- Social Icons Bottom Left -->
-                <div class="flex items-center space-x-4 pt-4 text-white/60 text-xs">
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-pinterest-p"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-behance"></i></a>
-                </div>
+                
             </div>
 
             <!-- CENTER COLUMN: 3D Isolated Floating Product Showcase (3D Spin & Vertical Motion) -->
