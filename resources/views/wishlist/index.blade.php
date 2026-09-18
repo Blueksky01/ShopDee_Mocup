@@ -33,9 +33,30 @@
 
                     <div class="h-56 bg-limestone/40 flex items-center justify-center relative overflow-hidden">
                         @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @if(str_starts_with($product->image, 'http'))
+                                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @elseif(str_starts_with($product->image, 'images/'))
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @else
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @endif
                         @else
-                            <i class="fa-solid fa-box-open text-5xl text-terracotta/30"></i>
+                            @php
+                                $catSlug = $product->category->slug ?? '';
+                                $icon = match(true) {
+                                    str_contains($catSlug, 'clothing') => 'fa-shirt',
+                                    str_contains($catSlug, 'pants') => 'fa-vest',
+                                    str_contains($catSlug, 'shoes') => 'fa-shoe-prints',
+                                    str_contains($catSlug, 'bags') => 'fa-bag-shopping',
+                                    str_contains($catSlug, 'hats') => 'fa-hat-cowboy',
+                                    str_contains($catSlug, 'electronics') => 'fa-headphones',
+                                    default => 'fa-box-open',
+                                };
+                            @endphp
+                            <div class="flex flex-col items-center justify-center space-y-2 text-terracotta/40">
+                                <i class="fa-solid {{ $icon }} text-6xl"></i>
+                                <span class="text-[10px] font-bold tracking-wider uppercase text-rust/50">{{ $product->category->name }}</span>
+                            </div>
                         @endif
 
                         <span class="absolute top-3 left-3 text-xs font-semibold px-3 py-1 rounded-full {{ $product->stock > 0 ? 'bg-olive/20 text-olive-dark border border-olive/30' : 'bg-terracotta/20 text-terracotta-dark border border-terracotta/30' }}">

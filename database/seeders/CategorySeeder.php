@@ -11,16 +11,18 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Electronics & Gadgets',
-            'Fashion & Apparel',
-            'Home & Kitchen',
-            'Beauty & Personal Care',
-            'Sports & Outdoor',
+            'เสื้อผ้า (Clothing)' => 'clothing-apparel',
+            'กางเกง (Pants)' => 'pants-trousers',
+            'รองเท้า (Shoes)' => 'shoes-footwear',
+            'กระเป๋า (Bags)' => 'bags-backpacks',
+            'หมวก & แอคเซสซอรี (Hats & Accessories)' => 'hats-accessories',
+            'อุปกรณ์อิเล็กทรอนิกส์ (Electronics)' => 'electronics-gadgets',
+            'ของใช้ในบ้าน (Home & Living)' => 'home-kitchen',
         ];
 
-        foreach ($categories as $name) {
+        foreach ($categories as $name => $slug) {
             Category::updateOrCreate(
-                ['slug' => Str::slug($name)],
+                ['slug' => $slug],
                 ['name' => $name]
             );
         }
