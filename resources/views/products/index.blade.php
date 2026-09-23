@@ -138,11 +138,29 @@
                     It's not just about staying warm. It's about stepping outside and instantly feeling confident, comfortable, and completely yourself. Designed to elevate even the simplest outfit, this jacket wraps you in lightweight warmth.
                 </p>
 
-                <!-- CTA Button -->
-                <div>
-                    <a href="#catalog" class="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 font-bold px-6 py-2.5 rounded-full text-xs shadow-xl transition transform hover:-translate-y-0.5">
-                        <span>Get the look</span>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap items-center gap-3 pt-1">
+                    @auth
+                        @if(!auth()->user()->isAdmin())
+                            <form id="hero-cart-form" action="{{ isset($heroJackets['orange']) ? route('cart.add', $heroJackets['orange']) : '#' }}" method="POST" class="inline-flex">
+                                @csrf
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" id="hero-add-cart-btn" class="inline-flex items-center gap-2 bg-white hover:bg-white/90 text-gray-900 font-bold px-6 py-2.5 rounded-full text-xs shadow-xl transition transform hover:-translate-y-0.5 active:scale-95">
+                                    <i class="fa-solid fa-cart-plus text-terracotta text-sm"></i>
+                                    <span>เพิ่มลงตะกร้า</span>
+                                </button>
+                            </form>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 bg-white hover:bg-white/90 text-gray-900 font-bold px-6 py-2.5 rounded-full text-xs shadow-xl transition transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-cart-plus text-terracotta text-sm"></i>
+                            <span>เข้าสู่ระบบเพื่อซื้อ</span>
+                        </a>
+                    @endauth
+
+                    <a href="#catalog" class="inline-flex items-center gap-1.5 bg-black/30 hover:bg-black/50 text-white font-medium px-5 py-2.5 rounded-full text-xs border border-white/20 backdrop-blur-sm transition">
+                        <span>ดูสินค้าทั้งหมด</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
                     </a>
                 </div>
 
@@ -433,6 +451,12 @@
             }
         };
 
+        const heroProductUrls = {
+            orange: "{{ isset($heroJackets['orange']) ? route('cart.add', $heroJackets['orange']) : '#' }}",
+            black: "{{ isset($heroJackets['black']) ? route('cart.add', $heroJackets['black']) : '#' }}",
+            red: "{{ isset($heroJackets['red']) ? route('cart.add', $heroJackets['red']) : '#' }}"
+        };
+
         const variantKeys = ['orange', 'black', 'red'];
         let currentVariantIndex = 0;
         let isAnimating = false;
@@ -441,6 +465,11 @@
             if (isAnimating) return;
             const data = variants[key];
             if (!data) return;
+
+            const heroCartForm = document.getElementById('hero-cart-form');
+            if (heroCartForm && heroProductUrls[key]) {
+                heroCartForm.action = heroProductUrls[key];
+            }
 
             isAnimating = true;
 

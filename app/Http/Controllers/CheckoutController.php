@@ -33,7 +33,7 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'shipping_address' => ['required', 'string', 'max:500'],
-            'payment_method' => ['required', 'string', 'in:bank_transfer,credit_card,cod'],
+            'payment_method' => ['required', 'string', 'in:promptpay,bank_transfer,credit_card,cod'],
         ]);
 
         $user = Auth::user();

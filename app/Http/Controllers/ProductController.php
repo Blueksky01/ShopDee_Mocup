@@ -29,8 +29,18 @@ class ProductController extends Controller
 
         $products = $query->latest()->paginate(9);
         $categories = Category::all();
+        $heroJackets = Product::where('is_active', true)
+            ->where(function ($q) {
+                $q->where('slug', 'like', '%puffer%')
+                  ->orWhere('name', 'like', '%Puffer%');
+            })->get()->keyBy(function ($item) {
+                if (str_contains(strtolower($item->slug), 'orange') || str_contains(strtolower($item->name), 'orange')) return 'orange';
+                if (str_contains(strtolower($item->slug), 'black') || str_contains(strtolower($item->name), 'black')) return 'black';
+                if (str_contains(strtolower($item->slug), 'red') || str_contains(strtolower($item->name), 'red')) return 'red';
+                return $item->id;
+            });
 
-        return view('products.index', compact('products', 'categories'));
+        return view('products.index', compact('products', 'categories', 'heroJackets'));
     }
 
     public function show(Product $product): View
