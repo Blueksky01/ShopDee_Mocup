@@ -22,7 +22,7 @@
                 @php
                     $product = $wishlist->product;
                 @endphp
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition border border-terracotta/15 flex flex-col overflow-hidden relative">
+                <div class="group relative bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-terracotta/15 flex flex-col overflow-hidden cursor-pointer">
                     <!-- Wishlist Toggle (Remove) Button -->
                     <form action="{{ route('wishlist.toggle', $product) }}" method="POST" class="absolute top-3 right-3 z-10">
                         @csrf
@@ -34,11 +34,11 @@
                     <div class="h-56 bg-limestone/40 flex items-center justify-center relative overflow-hidden">
                         @if($product->image)
                             @if(str_starts_with($product->image, 'http'))
-                                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             @elseif(str_starts_with($product->image, 'images/'))
-                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             @endif
                         @else
                             @php
@@ -53,7 +53,7 @@
                                     default => 'fa-box-open',
                                 };
                             @endphp
-                            <div class="flex flex-col items-center justify-center space-y-2 text-terracotta/40">
+                            <div class="flex flex-col items-center justify-center space-y-2 text-terracotta/40 group-hover:scale-105 transition-transform duration-300">
                                 <i class="fa-solid {{ $icon }} text-6xl"></i>
                                 <span class="text-[10px] font-bold tracking-wider uppercase text-rust/50">{{ $product->category->name }}</span>
                             </div>
@@ -70,7 +70,8 @@
                                 {{ $product->category->name }}
                             </span>
                             <h3 class="text-lg font-bold text-rust mt-1 line-clamp-1">
-                                <a href="{{ route('products.show', $product->slug) }}" class="hover:text-terracotta transition">
+                                <a href="{{ route('products.show', $product->slug) }}" class="hover:text-terracotta transition focus:outline-none">
+                                    <span class="absolute inset-0" aria-hidden="true"></span>
                                     {{ $product->name }}
                                 </a>
                             </h3>
@@ -79,7 +80,7 @@
                             </p>
                         </div>
 
-                        <div class="pt-3 border-t border-limestone space-y-3">
+                        <div class="pt-3 border-t border-limestone space-y-3 relative z-10">
                             <div class="flex items-center justify-between">
                                 <span class="text-xl font-extrabold text-terracotta">
                                     ฿{{ number_format($product->price, 2) }}
