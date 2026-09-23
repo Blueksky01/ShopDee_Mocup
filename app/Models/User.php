@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->wishlists()->where('product_id', $productId)->exists();
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

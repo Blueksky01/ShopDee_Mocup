@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = Product::with('category')->where('is_active', true);
+        $query = Product::with(['category', 'reviews'])->where('is_active', true);
 
         // Search by keyword
         if ($request->filled('search')) {
@@ -45,6 +45,12 @@ class ProductController extends Controller
 
     public function show(Product $product): View
     {
-        return view('products.show', compact('product'));
+        $product->load(['category', 'reviews.user']);
+        $userReview = auth()->check() ? $product->reviews->firstWhere('user_id', auth()->id()) : null;
+        $ratingBreakdown = $product->ratingBreakdown();
+        $averageRating = $product->averageRating();
+        $reviewsCount = $product->reviewsCount();
+
+        return view('products.show', compact('product', 'userReview', 'ratingBreakdown', 'averageRating', 'reviewsCount'));
     }
 }

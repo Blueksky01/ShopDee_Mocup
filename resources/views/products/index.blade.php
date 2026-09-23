@@ -348,9 +348,21 @@
 
                         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
                             <div>
-                                <span class="text-xs font-bold text-terracotta uppercase tracking-wider">
-                                    {{ $product->category->name }}
-                                </span>
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-terracotta uppercase tracking-wider truncate">
+                                        {{ $product->category->name }}
+                                    </span>
+                                    <div class="flex items-center gap-2 text-xs shrink-0">
+                                        @if($product->reviews->count() > 0)
+                                            <div class="flex items-center gap-1">
+                                                <i class="fa-solid fa-star text-amber-400 text-[11px]"></i>
+                                                <span class="font-bold text-rust text-xs">{{ number_format($product->reviews->avg('rating'), 1) }}</span>
+                                            </div>
+                                            <span class="text-rust/30">•</span>
+                                        @endif
+                                        <span class="text-[11px] text-rust/60 font-medium">ขายแล้ว {{ number_format($product->totalSold()) }} ชิ้น</span>
+                                    </div>
+                                </div>
                                 <h3 class="text-lg font-bold text-rust mt-1 line-clamp-1">
                                     <a href="{{ route('products.show', $product->slug) }}" class="hover:text-terracotta transition focus:outline-none">
                                         <span class="absolute inset-0" aria-hidden="true"></span>

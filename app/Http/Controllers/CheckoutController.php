@@ -78,8 +78,9 @@ class CheckoutController extends Controller
                         'subtotal' => $subtotal,
                     ]);
 
-                    // Deduct stock
+                    // Deduct stock and update sold count
                     $item->product->decrement('stock', $item->quantity);
+                    $item->product->increment('sold_count', $item->quantity);
                 }
 
                 // Clear user cart
